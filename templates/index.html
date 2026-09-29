@@ -66,37 +66,21 @@
                         </div>
                     </div>
 
-                    <!-- Quick Preset Scenarios -->
-                    <div class="preset-wrapper">
-                        <span class="preset-heading">Quick Test Profiles:</span>
-                        <div class="preset-chip-group">
-                            <button type="button" class="preset-chip chip-normal" onclick="applyPreset('normal')">
-                                <span class="preset-dot dot-green"></span> Normal State
-                            </button>
-                            <button type="button" class="preset-chip chip-warning" onclick="applyPreset('warning')">
-                                <span class="preset-dot dot-amber"></span> Torque Strain
-                            </button>
-                            <button type="button" class="preset-chip chip-danger" onclick="applyPreset('critical')">
-                                <span class="preset-dot dot-red"></span> Critical Wear
-                            </button>
-                        </div>
-                    </div>
-
                     <!-- Machine Parameter Form -->
                     <form method="POST" action="/" id="maintenanceForm" class="sensor-form">
                         <div class="form-fields-grid">
 
-                            <!-- Machine Type Dropdown -->
+                            <!-- Product Type Dropdown -->
                             <div class="form-group span-full">
                                 <div class="label-row">
-                                    <label for="machine_type" class="field-label">Machine Type</label>
+                                    <label for="machine_type" class="field-label">Product Type</label>
                                     <span class="range-badge">Quality Variant [L / M / H]</span>
                                 </div>
                                 <div class="select-container">
                                     <select name="machine_type" id="machine_type" required>
-                                        <option value="L" {% if result and result.machine_type == 'L' %}selected{% endif %}>Type L — Low Quality Variant (50% Fleet Volume)</option>
-                                        <option value="M" {% if result and result.machine_type == 'M' %}selected{% endif %}>Type M — Medium Quality Variant (30% Fleet Volume)</option>
-                                        <option value="H" {% if result and result.machine_type == 'H' %}selected{% endif %}>Type H — High Quality Variant (20% Fleet Volume)</option>
+                                        <option value="L" {% if result and result.machine_type == 'L' %}selected{% endif %}>Type L — Low Quality Variant</option>
+                                        <option value="M" {% if result and result.machine_type == 'M' %}selected{% endif %}>Type M — Medium Quality Variant</option>
+                                        <option value="H" {% if result and result.machine_type == 'H' %}selected{% endif %}>Type H — High Quality Variant</option>
                                     </select>
                                     <span class="select-arrow">▼</span>
                                 </div>
@@ -295,7 +279,7 @@
                         <!-- 6-Parameter Telemetry Snapshot Matrix -->
                         <div class="telemetry-grid">
                             <div class="telemetry-cell">
-                                <span class="cell-label">Machine Type</span>
+                                <span class="cell-label">Product Type</span>
                                 <span class="cell-data font-mono">Type {{ result.machine_type }}</span>
                             </div>
                             <div class="telemetry-cell">
@@ -367,7 +351,7 @@
                         </div>
                         <h3 class="standby-title">Awaiting Telemetry Stream</h3>
                         <p class="standby-desc">
-                            Select a preset scenario or calibrate sensor values on the left, then click 
+                            Specify sensor parameters on the left, then click 
                             <strong class="standby-highlight">Predict Machine Failure</strong> to generate a diagnostic health report.
                         </p>
                         <div class="standby-specs">
@@ -395,55 +379,6 @@
 
         </main>
     </div>
-
-    <!-- Quick Preset Scenario Loader -->
-    <script>
-        const PRESET_DATA = {
-            normal: {
-                type: 'L',
-                airTemp: 298.1,
-                procTemp: 308.6,
-                speed: 1551,
-                torque: 42.8,
-                wear: 0
-            },
-            warning: {
-                type: 'L',
-                airTemp: 301.0,
-                procTemp: 310.5,
-                speed: 1350,
-                torque: 62.0,
-                wear: 185
-            },
-            critical: {
-                type: 'L',
-                airTemp: 302.5,
-                procTemp: 311.8,
-                speed: 1420,
-                torque: 58.0,
-                wear: 225
-            }
-        };
-
-        function applyPreset(profile) {
-            const data = PRESET_DATA[profile];
-            if (!data) return;
-
-            document.getElementById('machine_type').value = data.type;
-            document.getElementById('air_temperature').value = data.airTemp;
-            document.getElementById('process_temperature').value = data.procTemp;
-            document.getElementById('rotational_speed').value = data.speed;
-            document.getElementById('torque').value = data.torque;
-            document.getElementById('tool_wear').value = data.wear;
-
-            // Flash effect for tactile feedback
-            const inputs = document.querySelectorAll('.input-container input, .select-container select');
-            inputs.forEach(el => {
-                el.classList.add('flash-highlight');
-                setTimeout(() => el.classList.remove('flash-highlight'), 500);
-            });
-        }
-    </script>
 </body>
 
 </html>

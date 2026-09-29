@@ -407,68 +407,6 @@ body {
     color: var(--text-muted);
 }
 
-/* --------------------------------------------------------------------------
-   7. QUICK PRESET SCENARIO CHIPS
-   -------------------------------------------------------------------------- */
-.preset-wrapper {
-    background: rgba(0, 0, 0, 0.25);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-sm);
-    padding: 10px 12px;
-    margin-bottom: 18px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.preset-heading {
-    font-size: 11.5px;
-    font-weight: 600;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.preset-chip-group {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    flex: 1;
-}
-
-.preset-chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--border-subtle);
-    color: var(--text-secondary);
-    padding: 5px 10px;
-    border-radius: var(--radius-sm);
-    font-size: 12px;
-    font-weight: 500;
-    cursor: pointer;
-    font-family: var(--font-ui);
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.preset-chip:hover {
-    color: var(--text-light);
-    background: rgba(255, 255, 255, 0.1);
-    border-color: var(--border-medium);
-    transform: translateY(-1px);
-}
-
-.preset-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-}
-
-.dot-green { background-color: var(--risk-low); box-shadow: 0 0 6px var(--risk-low); }
-.dot-amber { background-color: var(--risk-med); box-shadow: 0 0 6px var(--risk-med); }
-.dot-red { background-color: var(--risk-high); box-shadow: 0 0 6px var(--risk-high); }
 
 /* --------------------------------------------------------------------------
    8. INPUT FORM & SENSOR FIELDS
