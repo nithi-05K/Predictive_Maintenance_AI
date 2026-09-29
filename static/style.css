@@ -1,0 +1,1241 @@
+/* ==========================================================================
+   PREDICTIVE MAINTENANCE SYSTEM - MODERN INDUSTRIAL / AI TELEMETRY STYLESHEET
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. DESIGN TOKENS & ROOT VARIABLES
+   -------------------------------------------------------------------------- */
+:root {
+    /* Color Palette: Dark Industrial Foundation */
+    --bg-deep: #070a13;
+    --bg-surface: rgba(13, 19, 35, 0.72);
+    --bg-surface-elevated: rgba(20, 30, 56, 0.65);
+    --bg-input: rgba(11, 17, 33, 0.85);
+    --bg-input-focus: rgba(22, 34, 64, 0.95);
+
+    /* Borders & Accents */
+    --border-subtle: rgba(255, 255, 255, 0.08);
+    --border-medium: rgba(255, 255, 255, 0.16);
+    --border-bright: rgba(56, 189, 248, 0.45);
+    
+    /* Typography Colors */
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    --text-light: #ffffff;
+
+    /* Theme Primary Brands */
+    --brand-cyan: #06b6d4;
+    --brand-cyan-glow: rgba(6, 182, 212, 0.35);
+    --brand-indigo: #6366f1;
+    --brand-indigo-hover: #4f46e5;
+    --brand-indigo-glow: rgba(99, 102, 241, 0.4);
+
+    /* Risk Tier Colors: LOW (Green), MEDIUM (Amber/Orange), HIGH (Crimson/Red) */
+    --risk-low: #10b981;
+    --risk-low-bg: rgba(16, 185, 129, 0.12);
+    --risk-low-border: rgba(16, 185, 129, 0.38);
+    --risk-low-glow: rgba(16, 185, 129, 0.3);
+
+    --risk-med: #f59e0b;
+    --risk-med-bg: rgba(245, 158, 11, 0.12);
+    --risk-med-border: rgba(245, 158, 11, 0.42);
+    --risk-med-glow: rgba(245, 158, 11, 0.35);
+
+    --risk-high: #ef4444;
+    --risk-high-bg: rgba(239, 68, 68, 0.16);
+    --risk-high-border: rgba(239, 68, 68, 0.55);
+    --risk-high-glow: rgba(239, 68, 68, 0.45);
+
+    /* Typography */
+    --font-ui: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'JetBrains Mono', 'Courier New', Courier, monospace;
+
+    /* Shadows & Elevations */
+    --shadow-master: 0 25px 60px -15px rgba(0, 0, 0, 0.75), 0 0 45px rgba(6, 182, 212, 0.08);
+    --shadow-glow: 0 8px 30px rgba(99, 102, 241, 0.4);
+
+    /* Radii */
+    --radius-sm: 8px;
+    --radius-md: 14px;
+    --radius-lg: 22px;
+    --radius-full: 9999px;
+}
+
+/* --------------------------------------------------------------------------
+   2. RESET & BASE ARCHITECTURE
+   -------------------------------------------------------------------------- */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    color-scheme: dark;
+}
+
+body {
+    background-color: var(--bg-deep);
+    color: var(--text-primary);
+    font-family: var(--font-ui);
+    min-height: 100vh;
+    padding: 32px 18px 48px;
+    position: relative;
+    overflow-x: hidden;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.font-mono {
+    font-family: var(--font-mono);
+}
+
+/* --------------------------------------------------------------------------
+   3. INDUSTRIAL BACKGROUND & GLOW EFFECTS
+   -------------------------------------------------------------------------- */
+/* Tech Dot Grid Pattern Overlay */
+.tech-grid-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(rgba(56, 189, 248, 0.08) 1.2px, transparent 1.2px),
+        linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+    background-size: 26px 26px, 130px 130px, 130px 130px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Atmospheric Glow Orbs */
+.ambient-glow {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(140px);
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.55;
+    animation: orbDrift 16s ease-in-out infinite alternate;
+}
+
+.glow-cyan {
+    width: 600px;
+    height: 600px;
+    top: -160px;
+    left: -120px;
+    background: radial-gradient(circle, rgba(6, 182, 212, 0.28), transparent 70%);
+}
+
+.glow-indigo {
+    width: 650px;
+    height: 650px;
+    bottom: -200px;
+    right: -140px;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.25), transparent 70%);
+    animation-delay: -6s;
+}
+
+.glow-amber {
+    width: 500px;
+    height: 500px;
+    top: 35%;
+    left: 45%;
+    background: radial-gradient(circle, rgba(245, 158, 11, 0.12), transparent 70%);
+    animation-delay: -11s;
+}
+
+@keyframes orbDrift {
+    0% { transform: translateY(0px) scale(1); }
+    100% { transform: translateY(30px) scale(1.08); }
+}
+
+/* --------------------------------------------------------------------------
+   4. CENTERED DASHBOARD WRAPPER & GLASS CARD
+   -------------------------------------------------------------------------- */
+.dashboard-wrapper {
+    position: relative;
+    z-index: 1;
+    max-width: 1180px;
+    margin: 0 auto;
+    animation: cardEntrance 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes cardEntrance {
+    0% {
+        opacity: 0;
+        transform: translateY(24px) scale(0.985);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.dashboard-card {
+    background: var(--bg-surface);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+    border: 1px solid var(--border-subtle);
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-master);
+    padding: 36px 38px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Subtle top glow bar on the dashboard card */
+.dashboard-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(6, 182, 212, 0.7), rgba(99, 102, 241, 0.7), transparent);
+}
+
+/* --------------------------------------------------------------------------
+   5. HEADER & CSS-ONLY AI INDUSTRIAL BADGE
+   -------------------------------------------------------------------------- */
+.dashboard-header {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--border-subtle);
+    margin-bottom: 30px;
+}
+
+/* Pure CSS AI/Industrial Visual Badge */
+.ai-visual-badge {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(14, 165, 233, 0.15) 0%, rgba(99, 102, 241, 0.05) 70%, transparent 100%);
+    box-shadow: 0 0 20px rgba(6, 182, 212, 0.2);
+}
+
+.ai-ring-outer {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2px dashed rgba(6, 182, 212, 0.6);
+    animation: rotateClockwise 12s linear infinite;
+}
+
+.ai-ring-inner {
+    position: absolute;
+    inset: 8px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(99, 102, 241, 0.55);
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+    animation: rotateCounterClockwise 6s linear infinite;
+}
+
+.ai-core-pulse {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #06b6d4, #6366f1);
+    box-shadow: 0 0 14px var(--brand-cyan);
+    animation: corePulse 2s ease-in-out infinite;
+}
+
+.ai-crosshairs {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.ai-crosshairs::before,
+.ai-crosshairs::after {
+    content: '';
+    position: absolute;
+    background: rgba(255, 255, 255, 0.35);
+}
+
+.ai-crosshairs::before {
+    top: 50%;
+    left: 4px;
+    right: 4px;
+    height: 1px;
+    transform: translateY(-50%);
+}
+
+.ai-crosshairs::after {
+    left: 50%;
+    top: 4px;
+    bottom: 4px;
+    width: 1px;
+    transform: translateX(-50%);
+}
+
+@keyframes rotateClockwise {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes rotateCounterClockwise {
+    from { transform: rotate(360deg); }
+    to { transform: rotate(0deg); }
+}
+
+@keyframes corePulse {
+    0%, 100% { transform: scale(0.9); opacity: 0.85; box-shadow: 0 0 10px var(--brand-cyan); }
+    50% { transform: scale(1.2); opacity: 1; box-shadow: 0 0 20px var(--brand-cyan), 0 0 30px var(--brand-indigo); }
+}
+
+.header-text-group {
+    flex: 1;
+}
+
+.status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(6, 182, 212, 0.1);
+    border: 1px solid rgba(6, 182, 212, 0.3);
+    padding: 4px 12px;
+    border-radius: var(--radius-full);
+    font-size: 12px;
+    font-weight: 600;
+    color: #67e8f9;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.live-pulse-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: var(--brand-cyan);
+    box-shadow: 0 0 8px var(--brand-cyan);
+    animation: livePulse 1.8s infinite;
+}
+
+@keyframes livePulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.4); opacity: 0.5; }
+}
+
+.header-title {
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, #ffffff 40%, #c7d2fe 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1.2;
+    margin-bottom: 4px;
+}
+
+.header-subtitle {
+    font-size: 15px;
+    color: var(--text-secondary);
+    font-weight: 400;
+}
+
+/* --------------------------------------------------------------------------
+   6. TWO-COLUMN DASHBOARD GRID
+   -------------------------------------------------------------------------- */
+.dashboard-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-items: stretch;
+}
+
+.panel-section {
+    background: var(--bg-surface-elevated);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+}
+
+.panel-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.panel-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: var(--radius-sm);
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.25), rgba(6, 182, 212, 0.15));
+    border: 1px solid rgba(99, 102, 241, 0.35);
+    color: #a5b4fc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.panel-icon.icon-cyan {
+    background: linear-gradient(135deg, rgba(6, 182, 212, 0.25), rgba(16, 185, 129, 0.15));
+    border-color: rgba(6, 182, 212, 0.35);
+    color: #67e8f9;
+}
+
+.panel-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-light);
+    letter-spacing: -0.2px;
+}
+
+.panel-subtitle {
+    font-size: 12.5px;
+    color: var(--text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   7. QUICK PRESET SCENARIO CHIPS
+   -------------------------------------------------------------------------- */
+.preset-wrapper {
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 10px 12px;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.preset-heading {
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.preset-chip-group {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    flex: 1;
+}
+
+.preset-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
+    padding: 5px 10px;
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: var(--font-ui);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.preset-chip:hover {
+    color: var(--text-light);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--border-medium);
+    transform: translateY(-1px);
+}
+
+.preset-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+}
+
+.dot-green { background-color: var(--risk-low); box-shadow: 0 0 6px var(--risk-low); }
+.dot-amber { background-color: var(--risk-med); box-shadow: 0 0 6px var(--risk-med); }
+.dot-red { background-color: var(--risk-high); box-shadow: 0 0 6px var(--risk-high); }
+
+/* --------------------------------------------------------------------------
+   8. INPUT FORM & SENSOR FIELDS
+   -------------------------------------------------------------------------- */
+.sensor-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex: 1;
+}
+
+.form-fields-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-group.span-full {
+    grid-column: span 2;
+}
+
+.label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.field-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e2e8f0;
+}
+
+.range-badge {
+    font-size: 11px;
+    font-family: var(--font-mono);
+    color: var(--text-muted);
+}
+
+.input-container,
+.select-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-container input,
+.select-container select {
+    width: 100%;
+    background: var(--bg-input);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 10px 42px 10px 12px;
+    color: #ffffff;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 500;
+    outline: none;
+    transition: all 0.25s ease;
+}
+
+.select-container select {
+    font-family: var(--font-ui);
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    padding-right: 32px;
+}
+
+.select-container select option {
+    background-color: #0f172a;
+    color: #ffffff;
+}
+
+.select-arrow {
+    position: absolute;
+    right: 12px;
+    font-size: 10px;
+    color: var(--text-muted);
+    pointer-events: none;
+}
+
+.input-unit {
+    position: absolute;
+    right: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: var(--font-mono);
+    color: var(--brand-cyan);
+    pointer-events: none;
+}
+
+/* Input Focus & Hover States */
+.input-container input:hover,
+.select-container select:hover {
+    border-color: var(--border-medium);
+}
+
+.input-container input:focus,
+.select-container select:focus {
+    background: var(--bg-input-focus);
+    border-color: var(--brand-cyan);
+    box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.2), 0 0 16px rgba(6, 182, 212, 0.15);
+}
+
+.flash-highlight {
+    animation: flashInput 0.5s ease;
+}
+
+@keyframes flashInput {
+    0%, 100% { border-color: var(--border-subtle); }
+    50% { border-color: var(--brand-cyan); box-shadow: 0 0 14px var(--brand-cyan-glow); }
+}
+
+/* --------------------------------------------------------------------------
+   9. PREDICT MACHINE FAILURE BUTTON
+   -------------------------------------------------------------------------- */
+.predict-button {
+    position: relative;
+    width: 100%;
+    margin-top: 10px;
+    background: linear-gradient(135deg, #4f46e5 0%, #6366f1 45%, #06b6d4 100%);
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 14px 20px;
+    color: #ffffff;
+    font-family: var(--font-ui);
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+    overflow: hidden;
+    box-shadow: var(--shadow-glow);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.predict-button .btn-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn-icon-zap {
+    color: #a5f3fc;
+    transition: transform 0.25s ease;
+}
+
+.btn-icon-arrow {
+    transition: transform 0.25s ease;
+}
+
+.predict-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 35px rgba(99, 102, 241, 0.5), 0 0 25px rgba(6, 182, 212, 0.45);
+    filter: brightness(1.08);
+}
+
+.predict-button:hover .btn-icon-zap {
+    transform: rotate(-12deg) scale(1.15);
+}
+
+.predict-button:hover .btn-icon-arrow {
+    transform: translateX(4px);
+}
+
+.predict-button:active {
+    transform: translateY(0);
+}
+
+/* Shimmer Light Bar Effect */
+.btn-shimmer {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+    transform: skewX(-25deg);
+    transition: 0.75s;
+    z-index: 1;
+}
+
+.predict-button:hover .btn-shimmer {
+    left: 140%;
+}
+
+/* --------------------------------------------------------------------------
+   10. DIAGNOSTIC RESULTS SECTION & RISK THEMES
+   -------------------------------------------------------------------------- */
+.result-details-card {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    animation: resultSlideIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes resultSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Risk Level Theme Foundations */
+/* Theme: LOW Risk (Professional Green) */
+.risk-theme-low .risk-status-banner {
+    background: var(--risk-low-bg);
+    border: 1px solid var(--risk-low-border);
+    box-shadow: 0 0 20px var(--risk-low-glow);
+}
+.risk-theme-low .pulse-beacon {
+    background-color: var(--risk-low);
+    box-shadow: 0 0 10px var(--risk-low);
+}
+.risk-theme-low .machine-status-title {
+    color: #34d399;
+}
+.risk-theme-low .risk-level-badge {
+    background: rgba(16, 185, 129, 0.2);
+    border: 1px solid var(--risk-low-border);
+    color: #34d399;
+}
+.risk-theme-low .gauge-fill-bar {
+    background: linear-gradient(90deg, #059669, #10b981, #34d399);
+    box-shadow: 0 0 12px var(--risk-low);
+}
+.risk-theme-low .recommendation-callout {
+    border-left-color: var(--risk-low);
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(6, 182, 212, 0.04));
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    border-left: 4px solid var(--risk-low);
+}
+.risk-theme-low .rec-icon {
+    color: #34d399;
+}
+
+/* Theme: MEDIUM Risk (Warning Orange / Amber) */
+.risk-theme-medium .risk-status-banner {
+    background: var(--risk-med-bg);
+    border: 1px solid var(--risk-med-border);
+    box-shadow: 0 0 20px var(--risk-med-glow);
+}
+.risk-theme-medium .pulse-beacon {
+    background-color: var(--risk-med);
+    box-shadow: 0 0 12px var(--risk-med);
+    animation: warningPulse 1.4s infinite;
+}
+.risk-theme-medium .machine-status-title {
+    color: #fbbf24;
+}
+.risk-theme-medium .risk-level-badge {
+    background: rgba(245, 158, 11, 0.2);
+    border: 1px solid var(--risk-med-border);
+    color: #fbbf24;
+}
+.risk-theme-medium .gauge-fill-bar {
+    background: linear-gradient(90deg, #d97706, #f59e0b, #fbbf24);
+    box-shadow: 0 0 14px var(--risk-med);
+}
+.risk-theme-medium .recommendation-callout {
+    border-left-color: var(--risk-med);
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(99, 102, 241, 0.04));
+    border: 1px solid rgba(245, 158, 11, 0.35);
+    border-left: 4px solid var(--risk-med);
+}
+.risk-theme-medium .rec-icon {
+    color: #fbbf24;
+}
+
+/* Theme: HIGH Risk (Danger Crimson / Red) */
+.risk-theme-high .risk-status-banner {
+    background: var(--risk-high-bg);
+    border: 1px solid var(--risk-high-border);
+    box-shadow: 0 0 24px var(--risk-high-glow);
+}
+.risk-theme-high .pulse-beacon {
+    background-color: var(--risk-high);
+    box-shadow: 0 0 16px var(--risk-high);
+    animation: dangerPulse 0.9s infinite;
+}
+.risk-theme-high .machine-status-title {
+    color: #f87171;
+}
+.risk-theme-high .risk-level-badge {
+    background: rgba(239, 68, 68, 0.25);
+    border: 1px solid var(--risk-high-border);
+    color: #f87171;
+}
+.risk-theme-high .gauge-fill-bar {
+    background: linear-gradient(90deg, #dc2626, #ef4444, #f87171);
+    box-shadow: 0 0 18px var(--risk-high);
+}
+.risk-theme-high .recommendation-callout {
+    border-left-color: var(--risk-high);
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.12), rgba(245, 158, 11, 0.05));
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    border-left: 4px solid var(--risk-high);
+}
+.risk-theme-high .rec-icon {
+    color: #f87171;
+}
+
+@keyframes warningPulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.4); opacity: 0.6; }
+}
+
+@keyframes dangerPulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.55); opacity: 0.45; }
+}
+
+/* --------------------------------------------------------------------------
+   11. STATUS & RISK BANNER
+   -------------------------------------------------------------------------- */
+.risk-status-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-radius: var(--radius-sm);
+    position: relative;
+    overflow: hidden;
+}
+
+.status-indicator-box {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.pulse-beacon {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.status-overline {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 2px;
+}
+
+.machine-status-title {
+    font-size: 19px;
+    font-weight: 800;
+    letter-spacing: 0.2px;
+}
+
+.risk-level-badge {
+    text-align: right;
+    padding: 6px 14px;
+    border-radius: var(--radius-sm);
+}
+
+.risk-badge-sub {
+    display: block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    opacity: 0.8;
+}
+
+.risk-badge-val {
+    font-size: 18px;
+    font-weight: 800;
+    font-family: var(--font-mono);
+}
+
+/* --------------------------------------------------------------------------
+   12. FAILURE PROBABILITY GAUGE & DECISION THRESHOLD
+   -------------------------------------------------------------------------- */
+.probability-metric-box {
+    background: rgba(0, 0, 0, 0.28);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 18px;
+}
+
+.metric-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 12px;
+}
+
+.prob-title {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.prob-value {
+    font-size: 32px;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.5px;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+.gauge-bar-wrapper {
+    margin: 10px 0 26px;
+}
+
+.gauge-track {
+    position: relative;
+    height: 14px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-full);
+}
+
+.gauge-fill-bar {
+    height: 100%;
+    border-radius: var(--radius-full);
+    transition: width 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.threshold-indicator {
+    position: absolute;
+    top: -5px;
+    bottom: -5px;
+    width: 2px;
+    background: #ffffff;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.9);
+    transform: translateX(-50%);
+    pointer-events: none;
+    z-index: 3;
+}
+
+.threshold-flag {
+    position: absolute;
+    top: 24px;
+    transform: translateX(-50%);
+    background: #0f172a;
+    border: 1px solid var(--border-medium);
+    padding: 2px 7px;
+    border-radius: 4px;
+    white-space: nowrap;
+    font-size: 10.5px;
+    font-weight: 600;
+    font-family: var(--font-mono);
+    color: #e2e8f0;
+}
+
+.gauge-legend-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    font-family: var(--font-mono);
+    color: var(--text-muted);
+}
+
+.legend-threshold-tag {
+    color: #cbd5e1;
+    font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   13. TELEMETRY SNAPSHOT GRID (ALL 6 PARAMETERS)
+   -------------------------------------------------------------------------- */
+.telemetry-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+
+.telemetry-cell {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 8px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.cell-label {
+    font-size: 10.5px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+}
+
+.cell-data {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #e2e8f0;
+}
+
+/* --------------------------------------------------------------------------
+   14. ANOMALIES & SENSOR STRAIN ALERTS
+   -------------------------------------------------------------------------- */
+.anomalies-box {
+    background: rgba(245, 158, 11, 0.09);
+    border: 1px solid rgba(245, 158, 11, 0.35);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+}
+
+.anomalies-title-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: #fbbf24;
+    margin-bottom: 6px;
+}
+
+.anomalies-bullet-list {
+    padding-left: 18px;
+    font-size: 12px;
+    color: #fde68a;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+/* --------------------------------------------------------------------------
+   15. RECOMMENDATION PROTOCOL CALLOUT
+   -------------------------------------------------------------------------- */
+.recommendation-callout {
+    border-radius: var(--radius-sm);
+    padding: 16px 18px;
+}
+
+.rec-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+}
+
+.rec-title {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #f1f5f9;
+    letter-spacing: 0.2px;
+}
+
+.rec-text {
+    font-size: 13px;
+    color: #cbd5e1;
+    line-height: 1.55;
+}
+
+/* --------------------------------------------------------------------------
+   16. STANDBY / EMPTY MONITOR STATE
+   -------------------------------------------------------------------------- */
+.standby-card {
+    text-align: center;
+    padding: 48px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+/* CSS Animated Radar Scanner */
+.radar-scanner-element {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 1px solid rgba(6, 182, 212, 0.3);
+    margin-bottom: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle, rgba(6, 182, 212, 0.08) 0%, transparent 70%);
+}
+
+.radar-circle-1 {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 1px dashed rgba(6, 182, 212, 0.25);
+}
+
+.radar-circle-2 {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 1px solid rgba(6, 182, 212, 0.4);
+}
+
+.radar-sweep-arm {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    transform-origin: top left;
+    background: conic-gradient(from 0deg, rgba(6, 182, 212, 0.45) 0deg, transparent 60deg);
+    border-radius: 0 100% 0 0;
+    animation: radarSweep 3.5s linear infinite;
+}
+
+.radar-center-blip {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--brand-cyan);
+    box-shadow: 0 0 10px var(--brand-cyan);
+}
+
+@keyframes radarSweep {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.standby-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #e2e8f0;
+    margin-bottom: 8px;
+}
+
+.standby-desc {
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    max-width: 360px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.standby-highlight {
+    color: #67e8f9;
+}
+
+.standby-specs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.spec-tag {
+    font-size: 11px;
+    font-family: var(--font-mono);
+    color: var(--text-muted);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border-subtle);
+    padding: 3px 8px;
+    border-radius: 4px;
+}
+
+/* --------------------------------------------------------------------------
+   17. DASHBOARD FOOTER
+   -------------------------------------------------------------------------- */
+.dashboard-footer {
+    margin-top: 30px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border-subtle);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: var(--text-muted);
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.footer-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.footer-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--brand-cyan);
+}
+
+.footer-meta {
+    display: flex;
+    gap: 16px;
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+}
+
+/* --------------------------------------------------------------------------
+   18. RESPONSIVE DESIGN (DESKTOP, LAPTOP, TABLET, MOBILE)
+   -------------------------------------------------------------------------- */
+@media (max-width: 992px) {
+    .dashboard-layout {
+        grid-template-columns: 1fr;
+        gap: 22px;
+    }
+
+    .dashboard-card {
+        padding: 28px 24px;
+    }
+
+    .header-title {
+        font-size: 28px;
+    }
+}
+
+@media (max-width: 680px) {
+    body {
+        padding: 16px 10px 32px;
+    }
+
+    .dashboard-card {
+        padding: 22px 16px;
+        border-radius: var(--radius-md);
+    }
+
+    .dashboard-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 16px;
+    }
+
+    .header-title {
+        font-size: 24px;
+    }
+
+    .form-fields-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-group.span-full {
+        grid-column: span 1;
+    }
+
+    .telemetry-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .prob-value {
+        font-size: 26px;
+    }
+
+    .dashboard-footer {
+        flex-direction: column;
+        text-align: center;
+        gap: 8px;
+    }
+
+    .footer-meta {
+        flex-direction: column;
+        gap: 4px;
+    }
+}

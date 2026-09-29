@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predictive Maintenance System | AI Telemetry & Failure Prediction</title>
+
+    <!-- Google Fonts: Outfit (UI) & JetBrains Mono (Telemetry/Metrics) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Primary Stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <!-- Ambient Industrial Glow Orbs -->
+    <div class="ambient-glow glow-cyan"></div>
+    <div class="ambient-glow glow-indigo"></div>
+    <div class="ambient-glow glow-amber"></div>
+
+    <!-- Tech Grid Background Overlay -->
+    <div class="tech-grid-overlay"></div>
+
+    <!-- Centered Master Dashboard Container -->
+    <div class="dashboard-wrapper">
+        <main class="dashboard-card">
+
+            <!-- Header Section -->
+            <header class="dashboard-header">
+                <!-- CSS-only AI/Industrial Visual Badge -->
+                <div class="ai-visual-badge" aria-label="AI Industrial Core">
+                    <div class="ai-ring-outer"></div>
+                    <div class="ai-ring-inner"></div>
+                    <div class="ai-core-pulse"></div>
+                    <div class="ai-crosshairs"></div>
+                </div>
+
+                <div class="header-text-group">
+                    <div class="status-pill">
+                        <span class="live-pulse-dot"></span>
+                        <span class="status-text">AI Telemetry Engine • Active Monitor</span>
+                    </div>
+                    <h1 class="header-title">Predictive Maintenance System</h1>
+                    <p class="header-subtitle">Machine Failure Prediction using Machine Learning</p>
+                </div>
+            </header>
+
+            <!-- Dashboard Content Grid -->
+            <div class="dashboard-layout">
+
+                <!-- Left Column: Input Form & Telemetry Parameters -->
+                <section class="panel-section input-panel">
+                    <div class="panel-header">
+                        <div class="panel-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="3"></circle>
+                                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h2 class="panel-title">Machine Telemetry Inputs</h2>
+                            <p class="panel-subtitle">Configure real-time sensor parameters</p>
+                        </div>
+                    </div>
+
+                    <!-- Quick Preset Scenarios -->
+                    <div class="preset-wrapper">
+                        <span class="preset-heading">Quick Test Profiles:</span>
+                        <div class="preset-chip-group">
+                            <button type="button" class="preset-chip chip-normal" onclick="applyPreset('normal')">
+                                <span class="preset-dot dot-green"></span> Normal State
+                            </button>
+                            <button type="button" class="preset-chip chip-warning" onclick="applyPreset('warning')">
+                                <span class="preset-dot dot-amber"></span> Torque Strain
+                            </button>
+                            <button type="button" class="preset-chip chip-danger" onclick="applyPreset('critical')">
+                                <span class="preset-dot dot-red"></span> Critical Wear
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Machine Parameter Form -->
+                    <form method="POST" action="/" id="maintenanceForm" class="sensor-form">
+                        <div class="form-fields-grid">
+
+                            <!-- Machine Type Dropdown -->
+                            <div class="form-group span-full">
+                                <div class="label-row">
+                                    <label for="machine_type" class="field-label">Machine Type</label>
+                                    <span class="range-badge">Quality Variant [L / M / H]</span>
+                                </div>
+                                <div class="select-container">
+                                    <select name="machine_type" id="machine_type" required>
+                                        <option value="L" {% if result and result.machine_type == 'L' %}selected{% endif %}>Type L — Low Quality Variant (50% Fleet Volume)</option>
+                                        <option value="M" {% if result and result.machine_type == 'M' %}selected{% endif %}>Type M — Medium Quality Variant (30% Fleet Volume)</option>
+                                        <option value="H" {% if result and result.machine_type == 'H' %}selected{% endif %}>Type H — High Quality Variant (20% Fleet Volume)</option>
+                                    </select>
+                                    <span class="select-arrow">▼</span>
+                                </div>
+                            </div>
+
+                            <!-- Air Temperature -->
+                            <div class="form-group">
+                                <div class="label-row">
+                                    <label for="air_temperature" class="field-label">Air Temperature [K]</label>
+                                    <span class="range-badge">295.3 – 304.5 K</span>
+                                </div>
+                                <div class="input-container">
+                                    <input 
+                                        type="number" 
+                                        name="air_temperature" 
+                                        id="air_temperature" 
+                                        step="0.1" 
+                                        min="295.3" 
+                                        max="304.5" 
+                                        value="{{ result.air_temperature if result else '298.1' }}" 
+                                        placeholder="298.1" 
+                                        required
+                                    >
+                                    <span class="input-unit">K</span>
+                                </div>
+                            </div>
+
+                            <!-- Process Temperature -->
+                            <div class="form-group">
+                                <div class="label-row">
+                                    <label for="process_temperature" class="field-label">Process Temperature [K]</label>
+                                    <span class="range-badge">305.7 – 313.8 K</span>
+                                </div>
+                                <div class="input-container">
+                                    <input 
+                                        type="number" 
+                                        name="process_temperature" 
+                                        id="process_temperature" 
+                                        step="0.1" 
+                                        min="305.7" 
+                                        max="313.8" 
+                                        value="{{ result.process_temperature if result else '308.6' }}" 
+                                        placeholder="308.6" 
+                                        required
+                                    >
+                                    <span class="input-unit">K</span>
+                                </div>
+                            </div>
+
+                            <!-- Rotational Speed -->
+                            <div class="form-group">
+                                <div class="label-row">
+                                    <label for="rotational_speed" class="field-label">Rotational Speed [rpm]</label>
+                                    <span class="range-badge">1168 – 2886 rpm</span>
+                                </div>
+                                <div class="input-container">
+                                    <input 
+                                        type="number" 
+                                        name="rotational_speed" 
+                                        id="rotational_speed" 
+                                        step="1" 
+                                        min="1168" 
+                                        max="2886" 
+                                        value="{{ result.rotational_speed if result else '1551' }}" 
+                                        placeholder="1551" 
+                                        required
+                                    >
+                                    <span class="input-unit">rpm</span>
+                                </div>
+                            </div>
+
+                            <!-- Torque -->
+                            <div class="form-group">
+                                <div class="label-row">
+                                    <label for="torque" class="field-label">Torque [Nm]</label>
+                                    <span class="range-badge">3.8 – 76.6 Nm</span>
+                                </div>
+                                <div class="input-container">
+                                    <input 
+                                        type="number" 
+                                        name="torque" 
+                                        id="torque" 
+                                        step="0.1" 
+                                        min="3.8" 
+                                        max="76.6" 
+                                        value="{{ result.torque if result else '42.8' }}" 
+                                        placeholder="42.8" 
+                                        required
+                                    >
+                                    <span class="input-unit">Nm</span>
+                                </div>
+                            </div>
+
+                            <!-- Tool Wear -->
+                            <div class="form-group span-full">
+                                <div class="label-row">
+                                    <label for="tool_wear" class="field-label">Tool Wear [min]</label>
+                                    <span class="range-badge">0 – 253 min</span>
+                                </div>
+                                <div class="input-container">
+                                    <input 
+                                        type="number" 
+                                        name="tool_wear" 
+                                        id="tool_wear" 
+                                        step="1" 
+                                        min="0" 
+                                        max="253" 
+                                        value="{{ result.tool_wear if result else '0' }}" 
+                                        placeholder="0" 
+                                        required
+                                    >
+                                    <span class="input-unit">min</span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Predict Button -->
+                        <button type="submit" class="predict-button" id="predictBtn">
+                            <span class="btn-shimmer"></span>
+                            <span class="btn-glow-layer"></span>
+                            <span class="btn-content">
+                                <svg class="btn-icon-zap" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                                </svg>
+                                <span>Predict Machine Failure</span>
+                                <svg class="btn-icon-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </span>
+                        </button>
+                    </form>
+                </section>
+
+                <!-- Right Column: Diagnostics & Prediction Results -->
+                <section class="panel-section result-panel" id="resultSection">
+                    <div class="panel-header">
+                        <div class="panel-icon icon-cyan">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h2 class="panel-title">Diagnostic Telemetry</h2>
+                            <p class="panel-subtitle">AI Health Analysis & Risk Prediction</p>
+                        </div>
+                    </div>
+
+                    {% if result %}
+                    <!-- Dynamic Result Card keyed by Risk Tier -->
+                    <div class="result-details-card risk-theme-{{ result.risk.lower() }}">
+
+                        <!-- Status & Risk Banner -->
+                        <div class="risk-status-banner">
+                            <div class="status-indicator-box">
+                                <div class="pulse-beacon"></div>
+                                <div class="status-texts">
+                                    <span class="status-overline">MACHINE STATUS</span>
+                                    <h3 class="machine-status-title">{{ result.status }}</h3>
+                                </div>
+                            </div>
+                            <div class="risk-level-badge">
+                                <span class="risk-badge-sub">RISK LEVEL</span>
+                                <span class="risk-badge-val">{{ result.risk }}</span>
+                            </div>
+                        </div>
+
+                        <!-- Failure Probability Prominent Section -->
+                        <div class="probability-metric-box">
+                            <div class="metric-header-row">
+                                <span class="prob-title">Failure Probability</span>
+                                <span class="prob-value font-mono">{{ "%.2f"|format(result.probability) }}%</span>
+                            </div>
+
+                            <!-- Progress & Decision Threshold Bar -->
+                            <div class="gauge-bar-wrapper">
+                                <div class="gauge-track">
+                                    <div class="gauge-fill-bar" style="width: {{ result.probability if result.probability <= 100 else 100 }}%;"></div>
+                                    <div class="threshold-indicator" style="left: {{ result.threshold }}%;">
+                                        <div class="threshold-flag">
+                                            <span>Threshold {{ "%.0f"|format(result.threshold) }}%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Threshold & Scale Legend -->
+                            <div class="gauge-legend-row">
+                                <span>0% (Optimal Safety)</span>
+                                <span class="legend-threshold-tag">Decision Threshold: {{ "%.0f"|format(result.threshold) }}%</span>
+                                <span>100% (Imminent Failure)</span>
+                            </div>
+                        </div>
+
+                        <!-- 6-Parameter Telemetry Snapshot Matrix -->
+                        <div class="telemetry-grid">
+                            <div class="telemetry-cell">
+                                <span class="cell-label">Machine Type</span>
+                                <span class="cell-data font-mono">Type {{ result.machine_type }}</span>
+                            </div>
+                            <div class="telemetry-cell">
+                                <span class="cell-label">Air Temperature</span>
+                                <span class="cell-data font-mono">{{ "%.1f"|format(result.air_temperature) }} K</span>
+                            </div>
+                            <div class="telemetry-cell">
+                                <span class="cell-label">Process Temperature</span>
+                                <span class="cell-data font-mono">{{ "%.1f"|format(result.process_temperature) }} K</span>
+                            </div>
+                            <div class="telemetry-cell">
+                                <span class="cell-label">Rotational Speed</span>
+                                <span class="cell-data font-mono">{{ "%.0f"|format(result.rotational_speed) }} rpm</span>
+                            </div>
+                            <div class="telemetry-cell">
+                                <span class="cell-label">Torque</span>
+                                <span class="cell-data font-mono">{{ "%.1f"|format(result.torque) }} Nm</span>
+                            </div>
+                            <div class="telemetry-cell">
+                                <span class="cell-label">Tool Wear</span>
+                                <span class="cell-data font-mono">{{ "%.0f"|format(result.tool_wear) }} min</span>
+                            </div>
+                        </div>
+
+                        <!-- Detected Sensor Stress / Anomalies (if any) -->
+                        {% if result.anomalies %}
+                        <div class="anomalies-box">
+                            <div class="anomalies-title-row">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                                    <line x1="12" y1="9" x2="12" y2="13"></line>
+                                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                                </svg>
+                                <span>Sensor Strain Alerts:</span>
+                            </div>
+                            <ul class="anomalies-bullet-list">
+                                {% for anomaly in result.anomalies %}
+                                <li>{{ anomaly }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% endif %}
+
+                        <!-- Distinct Maintenance Action Recommendation Box -->
+                        <div class="recommendation-callout">
+                            <div class="rec-header">
+                                <div class="rec-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                        <polyline points="14 2 14 8 20 8"></polyline>
+                                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                                    </svg>
+                                </div>
+                                <h4 class="rec-title">Maintenance Protocol & Recommendation</h4>
+                            </div>
+                            <p class="rec-text">{{ result.recommendation }}</p>
+                        </div>
+
+                    </div>
+                    {% else %}
+                    <!-- Standby / Empty State When No Prediction Made Yet -->
+                    <div class="standby-card">
+                        <div class="radar-scanner-element">
+                            <div class="radar-circle-1"></div>
+                            <div class="radar-circle-2"></div>
+                            <div class="radar-sweep-arm"></div>
+                            <div class="radar-center-blip"></div>
+                        </div>
+                        <h3 class="standby-title">Awaiting Telemetry Stream</h3>
+                        <p class="standby-desc">
+                            Select a preset scenario or calibrate sensor values on the left, then click 
+                            <strong class="standby-highlight">Predict Machine Failure</strong> to generate a diagnostic health report.
+                        </p>
+                        <div class="standby-specs">
+                            <span class="spec-tag">Random Forest AI</span>
+                            <span class="spec-tag">Calibrated Threshold: 30%</span>
+                            <span class="spec-tag">Multi-Sensor Validation</span>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                </section>
+            </div>
+
+            <!-- Footer Section -->
+            <footer class="dashboard-footer">
+                <div class="footer-badge">
+                    <span class="footer-dot"></span>
+                    <span>AI4I 2020 Predictive Telemetry Dataset • Enterprise Predictive Maintenance</span>
+                </div>
+                <div class="footer-meta">
+                    <span>Model: Balanced Random Forest Classifier</span>
+                    <span>Confidence Evaluation: Real-Time Inference</span>
+                </div>
+            </footer>
+
+        </main>
+    </div>
+
+    <!-- Quick Preset Scenario Loader -->
+    <script>
+        const PRESET_DATA = {
+            normal: {
+                type: 'L',
+                airTemp: 298.1,
+                procTemp: 308.6,
+                speed: 1551,
+                torque: 42.8,
+                wear: 0
+            },
+            warning: {
+                type: 'L',
+                airTemp: 301.0,
+                procTemp: 310.5,
+                speed: 1350,
+                torque: 62.0,
+                wear: 185
+            },
+            critical: {
+                type: 'L',
+                airTemp: 302.5,
+                procTemp: 311.8,
+                speed: 1420,
+                torque: 58.0,
+                wear: 225
+            }
+        };
+
+        function applyPreset(profile) {
+            const data = PRESET_DATA[profile];
+            if (!data) return;
+
+            document.getElementById('machine_type').value = data.type;
+            document.getElementById('air_temperature').value = data.airTemp;
+            document.getElementById('process_temperature').value = data.procTemp;
+            document.getElementById('rotational_speed').value = data.speed;
+            document.getElementById('torque').value = data.torque;
+            document.getElementById('tool_wear').value = data.wear;
+
+            // Flash effect for tactile feedback
+            const inputs = document.querySelectorAll('.input-container input, .select-container select');
+            inputs.forEach(el => {
+                el.classList.add('flash-highlight');
+                setTimeout(() => el.classList.remove('flash-highlight'), 500);
+            });
+        }
+    </script>
+</body>
+
+</html>
