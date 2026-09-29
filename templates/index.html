@@ -41,7 +41,7 @@
                 <div class="header-text-group">
                     <div class="status-pill">
                         <span class="live-pulse-dot"></span>
-                        <span class="status-text">AI Telemetry Engine • Active Monitor</span>
+                        <span class="status-text">AI-POWERED PREDICTIVE MAINTENANCE</span>
                     </div>
                     <h1 class="header-title">Predictive Maintenance System</h1>
                     <p class="header-subtitle">Machine Failure Prediction using Machine Learning</p>
@@ -337,6 +337,57 @@
                                 <h4 class="rec-title">Maintenance Protocol & Recommendation</h4>
                             </div>
                             <p class="rec-text">{{ result.recommendation }}</p>
+                        </div>
+
+                        <!-- AI Maintenance Assistant (Powered by Gemini) -->
+                        <div class="ai-assistant-card">
+                            <div class="ai-assistant-header">
+                                <div class="ai-assistant-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                    </svg>
+                                </div>
+                                <div class="ai-header-titles">
+                                    <div class="ai-pill-badge">
+                                        <span class="ai-pulse-dot"></span>
+                                        <span>Generative AI Analysis • Gemini</span>
+                                    </div>
+                                    <h4 class="ai-card-title">AI Maintenance Assistant</h4>
+                                </div>
+                            </div>
+
+                            {% if result.ai_error and not result.ai_available %}
+                            <div class="ai-notice-box">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                                </svg>
+                                <span>AI explanation unavailable. ML prediction is still available.</span>
+                            </div>
+                            {% else %}
+                            <div class="ai-content-stack">
+                                <div class="ai-section-item">
+                                    <span class="ai-section-label">AI Explanation</span>
+                                    <p class="ai-section-text">{{ result.ai_explanation }}</p>
+                                </div>
+
+                                <div class="ai-section-item">
+                                    <span class="ai-section-label">Key Parameters</span>
+                                    <p class="ai-section-text">{{ result.ai_key_parameters }}</p>
+                                </div>
+
+                                <div class="ai-section-item">
+                                    <span class="ai-section-label">Maintenance Guidance</span>
+                                    <p class="ai-section-text">{{ result.ai_maintenance_guidance }}</p>
+                                </div>
+
+                                <div class="ai-advisory-item">
+                                    <span class="ai-advisory-label">Advisory</span>
+                                    <p class="ai-advisory-text">{{ result.ai_advisory }}</p>
+                                </div>
+                            </div>
+                            {% endif %}
                         </div>
 
                     </div>
