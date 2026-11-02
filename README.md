@@ -314,10 +314,3 @@ Run these scripts from the project root directory.
 - Gemini output is advisory and may be unavailable when API access or service capacity is limited.
 - The system is a prototype and should not be used as the sole basis for operational or safety-critical maintenance decisions.
 
----
-
-<div align="center">
-
-**Developed as an academic predictive-maintenance project.**
-
-</div>
