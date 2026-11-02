@@ -54,7 +54,7 @@ The application uses the **AI4I 2020 Predictive Maintenance Dataset** and a Rand
 
 ## 🖥️ Application Demonstration
 
-### Main Dashboard
+### 1. Main Dashboard
 
 The dashboard allows the user to enter the six machine operating parameters and submit them for failure-risk analysis.
 
@@ -62,9 +62,25 @@ The dashboard allows the user to enter the six machine operating parameters and 
 
 *Main dashboard before a prediction is submitted.*
 
-### Prediction Results
+### 2. High Failure-Risk Prediction
 
-Additional screenshots demonstrating normal operation, elevated/high failure risk, and Gemini-generated maintenance explanations will be added here.
+This example displays a high-risk prediction with the estimated failure probability, risk level, and machine status.
+
+![High Failure Risk Prediction](screenshots/failure-risk.jpg)
+
+### 3. Normal Operation Prediction
+
+This example displays a normal-operation result with a low estimated failure probability.
+
+![Normal Operation Prediction](screenshots/normal-operation.jpg)
+
+### 4. Gemini AI Maintenance Explanation
+
+After the Random Forest prediction, Gemini provides a natural-language explanation, highlights the supplied parameters, and offers general maintenance guidance.
+
+![Gemini AI Maintenance Explanation](screenshots/gemini-explanation.jpg)
+
+*Gemini output is advisory; the Random Forest model remains responsible for the failure prediction.*
 
 ## 🧠 Machine Learning Workflow
 
