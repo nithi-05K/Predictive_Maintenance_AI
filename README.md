@@ -1,6 +1,6 @@
 <div align="center">
 
-# ⚙️ AI-Powered Predictive Maintenance Assistant
+# ⚙️ Predictive Maintenance System in Smart Manufacturing Using Machine Learning and GenAI
 
 ### Predict machine failure. Understand the risk. Support preventive maintenance.
 
