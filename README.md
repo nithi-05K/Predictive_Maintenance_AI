@@ -54,25 +54,17 @@ The application uses the **AI4I 2020 Predictive Maintenance Dataset** and a Rand
 
 ## 🖥️ Application Demonstration
 
-Add screenshots captured from the running application in the `screenshots/` folder. The suggested names are:
+### Main Dashboard
 
-| Screenshot | What it demonstrates |
-|---|---|
-| `screenshots/dashboard.png` | Main application and input form |
-| `screenshots/normal-output.png` | Example with a low predicted failure probability |
-| `screenshots/failure-risk.png` | Example with an elevated or high predicted failure risk |
-| `screenshots/gemini-explanation.png` | Gemini explanation and maintenance guidance |
+The dashboard allows the user to enter the six machine operating parameters and submit them for failure-risk analysis.
 
-Once the screenshots are added, display them here:
+![Predictive Maintenance Application Dashboard](screenshots/dashboard.jpg)
 
-<!-- Add actual screenshots to the screenshots folder, then uncomment and update these image links.
-![Application Dashboard](screenshots/dashboard.png)
-![Normal Operation Result](screenshots/normal-output.png)
-![Failure Risk Result](screenshots/failure-risk.png)
-![Gemini Maintenance Explanation](screenshots/gemini-explanation.png)
--->
+*Main dashboard before a prediction is submitted.*
 
-A short project walkthrough can also be added here when available.
+### Prediction Results
+
+Additional screenshots demonstrating normal operation, elevated/high failure risk, and Gemini-generated maintenance explanations will be added here.
 
 ## 🧠 Machine Learning Workflow
 
