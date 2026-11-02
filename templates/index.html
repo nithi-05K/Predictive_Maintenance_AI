@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Predictive Maintenance System | AI Telemetry & Failure Prediction</title>
+    <meta name="description" content="Industrial predictive maintenance system using machine learning and generative AI for equipment health monitoring and failure prevention.">
 
     <!-- Google Fonts: Outfit (UI) & JetBrains Mono (Telemetry/Metrics) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -51,7 +52,7 @@
             <!-- Dashboard Content Grid -->
             <div class="dashboard-layout">
 
-                <!-- Left Column: Input Form & Telemetry Parameters -->
+                <!-- Left Column: Machine Inputs Form -->
                 <section class="panel-section input-panel">
                     <div class="panel-header">
                         <div class="panel-icon">
@@ -61,8 +62,8 @@
                             </svg>
                         </div>
                         <div>
-                            <h2 class="panel-title">Machine Telemetry Inputs</h2>
-                            <p class="panel-subtitle">Configure real-time sensor parameters</p>
+                            <h2 class="panel-title">STEP 1 — MACHINE INPUTS</h2>
+                            <p class="panel-subtitle">Enter the six machine operating parameters</p>
                         </div>
                     </div>
 
@@ -70,7 +71,7 @@
                     <form method="POST" action="/" id="maintenanceForm" class="sensor-form">
                         <div class="form-fields-grid">
 
-                            <!-- Product Type Dropdown -->
+                            <!-- 1. Product Type Dropdown -->
                             <div class="form-group span-full">
                                 <div class="label-row">
                                     <label for="machine_type" class="field-label">Product Type</label>
@@ -78,118 +79,118 @@
                                 </div>
                                 <div class="select-container">
                                     <select name="machine_type" id="machine_type" required>
-                                        <option value="L" {% if result and result.machine_type == 'L' %}selected{% endif %}>Type L — Low Quality Variant</option>
-                                        <option value="M" {% if result and result.machine_type == 'M' %}selected{% endif %}>Type M — Medium Quality Variant</option>
-                                        <option value="H" {% if result and result.machine_type == 'H' %}selected{% endif %}>Type H — High Quality Variant</option>
+                                        <option value="L" {% if result and result.machine_type == 'L' %}selected{% endif %}>Type L</option>
+                                        <option value="M" {% if result and result.machine_type == 'M' %}selected{% endif %}>Type M</option>
+                                        <option value="H" {% if result and result.machine_type == 'H' %}selected{% endif %}>Type H</option>
                                     </select>
                                     <span class="select-arrow">▼</span>
                                 </div>
                             </div>
 
-                            <!-- Air Temperature -->
+                            <!-- 2. Air Temperature -->
                             <div class="form-group">
                                 <div class="label-row">
                                     <label for="air_temperature" class="field-label">Air Temperature [K]</label>
                                     <span class="range-badge">295.3 – 304.5 K</span>
                                 </div>
                                 <div class="input-container">
-                                    <input 
-                                        type="number" 
-                                        name="air_temperature" 
-                                        id="air_temperature" 
-                                        step="0.1" 
-                                        min="295.3" 
-                                        max="304.5" 
-                                        value="{{ result.air_temperature if result else '298.1' }}" 
-                                        placeholder="298.1" 
+                                    <input
+                                        type="number"
+                                        name="air_temperature"
+                                        id="air_temperature"
+                                        step="0.1"
+                                        min="295.3"
+                                        max="304.5"
+                                        value="{{ result.air_temperature if result else '' }}"
+                                        placeholder="295.3 – 304.5"
                                         required
                                     >
                                     <span class="input-unit">K</span>
                                 </div>
                             </div>
 
-                            <!-- Process Temperature -->
+                            <!-- 3. Process Temperature -->
                             <div class="form-group">
                                 <div class="label-row">
                                     <label for="process_temperature" class="field-label">Process Temperature [K]</label>
                                     <span class="range-badge">305.7 – 313.8 K</span>
                                 </div>
                                 <div class="input-container">
-                                    <input 
-                                        type="number" 
-                                        name="process_temperature" 
-                                        id="process_temperature" 
-                                        step="0.1" 
-                                        min="305.7" 
-                                        max="313.8" 
-                                        value="{{ result.process_temperature if result else '308.6' }}" 
-                                        placeholder="308.6" 
+                                    <input
+                                        type="number"
+                                        name="process_temperature"
+                                        id="process_temperature"
+                                        step="0.1"
+                                        min="305.7"
+                                        max="313.8"
+                                        value="{{ result.process_temperature if result else '' }}"
+                                        placeholder="305.7 – 313.8"
                                         required
                                     >
                                     <span class="input-unit">K</span>
                                 </div>
                             </div>
 
-                            <!-- Rotational Speed -->
+                            <!-- 4. Rotational Speed -->
                             <div class="form-group">
                                 <div class="label-row">
                                     <label for="rotational_speed" class="field-label">Rotational Speed [rpm]</label>
                                     <span class="range-badge">1168 – 2886 rpm</span>
                                 </div>
                                 <div class="input-container">
-                                    <input 
-                                        type="number" 
-                                        name="rotational_speed" 
-                                        id="rotational_speed" 
-                                        step="1" 
-                                        min="1168" 
-                                        max="2886" 
-                                        value="{{ result.rotational_speed if result else '1551' }}" 
-                                        placeholder="1551" 
+                                    <input
+                                        type="number"
+                                        name="rotational_speed"
+                                        id="rotational_speed"
+                                        step="1"
+                                        min="1168"
+                                        max="2886"
+                                        value="{{ result.rotational_speed|int if result else '' }}"
+                                        placeholder="1168 – 2886"
                                         required
                                     >
                                     <span class="input-unit">rpm</span>
                                 </div>
                             </div>
 
-                            <!-- Torque -->
+                            <!-- 5. Torque -->
                             <div class="form-group">
                                 <div class="label-row">
                                     <label for="torque" class="field-label">Torque [Nm]</label>
                                     <span class="range-badge">3.8 – 76.6 Nm</span>
                                 </div>
                                 <div class="input-container">
-                                    <input 
-                                        type="number" 
-                                        name="torque" 
-                                        id="torque" 
-                                        step="0.1" 
-                                        min="3.8" 
-                                        max="76.6" 
-                                        value="{{ result.torque if result else '42.8' }}" 
-                                        placeholder="42.8" 
+                                    <input
+                                        type="number"
+                                        name="torque"
+                                        id="torque"
+                                        step="0.1"
+                                        min="3.8"
+                                        max="76.6"
+                                        value="{{ result.torque if result else '' }}"
+                                        placeholder="3.8 – 76.6"
                                         required
                                     >
                                     <span class="input-unit">Nm</span>
                                 </div>
                             </div>
 
-                            <!-- Tool Wear -->
+                            <!-- 6. Tool Wear -->
                             <div class="form-group span-full">
                                 <div class="label-row">
                                     <label for="tool_wear" class="field-label">Tool Wear [min]</label>
                                     <span class="range-badge">0 – 253 min</span>
                                 </div>
                                 <div class="input-container">
-                                    <input 
-                                        type="number" 
-                                        name="tool_wear" 
-                                        id="tool_wear" 
-                                        step="1" 
-                                        min="0" 
-                                        max="253" 
-                                        value="{{ result.tool_wear if result else '0' }}" 
-                                        placeholder="0" 
+                                    <input
+                                        type="number"
+                                        name="tool_wear"
+                                        id="tool_wear"
+                                        step="1"
+                                        min="0"
+                                        max="253"
+                                        value="{{ result.tool_wear|int if result else '' }}"
+                                        placeholder="0 – 253"
                                         required
                                     >
                                     <span class="input-unit">min</span>
@@ -202,11 +203,11 @@
                         <button type="submit" class="predict-button" id="predictBtn">
                             <span class="btn-shimmer"></span>
                             <span class="btn-glow-layer"></span>
-                            <span class="btn-content">
+                            <span class="btn-content" id="predictBtnContent">
                                 <svg class="btn-icon-zap" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                                     <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
                                 </svg>
-                                <span>Predict Machine Failure</span>
+                                <span>PREDICT FAILURE RISK</span>
                                 <svg class="btn-icon-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                                     <line x1="5" y1="12" x2="19" y2="12"></line>
                                     <polyline points="12 5 19 12 12 19"></polyline>
@@ -216,7 +217,7 @@
                     </form>
                 </section>
 
-                <!-- Right Column: Diagnostics & Prediction Results -->
+                <!-- Right Column: Prediction Results -->
                 <section class="panel-section result-panel" id="resultSection">
                     <div class="panel-header">
                         <div class="panel-icon icon-cyan">
@@ -225,14 +226,14 @@
                             </svg>
                         </div>
                         <div>
-                            <h2 class="panel-title">Diagnostic Telemetry</h2>
-                            <p class="panel-subtitle">AI Health Analysis & Risk Prediction</p>
+                            <h2 class="panel-title">Prediction Result</h2>
+                            <p class="panel-subtitle">Random Forest Failure Risk Analysis</p>
                         </div>
                     </div>
 
                     {% if result %}
-                    <!-- Dynamic Result Card keyed by Risk Tier -->
-                    <div class="result-details-card risk-theme-{{ result.risk.lower() }}">
+                    <!-- Prediction Result Card -->
+                    <div class="result-details-card risk-theme-{{ result.risk|lower }}">
 
                         <!-- Status & Risk Banner -->
                         <div class="risk-status-banner">
@@ -249,34 +250,33 @@
                             </div>
                         </div>
 
-                        <!-- Failure Probability Prominent Section -->
+                        <!-- Failure Probability -->
                         <div class="probability-metric-box">
                             <div class="metric-header-row">
                                 <span class="prob-title">Failure Probability</span>
                                 <span class="prob-value font-mono">{{ "%.2f"|format(result.probability) }}%</span>
                             </div>
 
-                            <!-- Progress & Decision Threshold Bar -->
+                            <!-- Gauge Bar -->
                             <div class="gauge-bar-wrapper">
                                 <div class="gauge-track">
                                     <div class="gauge-fill-bar" style="width: {{ result.probability if result.probability <= 100 else 100 }}%;"></div>
-                                    <div class="threshold-indicator" style="left: {{ result.threshold }}%;">
+                                    <div class="threshold-indicator" style="left: 30%;">
                                         <div class="threshold-flag">
-                                            <span>Threshold {{ "%.0f"|format(result.threshold) }}%</span>
+                                            <span>Threshold 30%</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Threshold & Scale Legend -->
                             <div class="gauge-legend-row">
                                 <span>0% (Optimal Safety)</span>
-                                <span class="legend-threshold-tag">Decision Threshold: {{ "%.0f"|format(result.threshold) }}%</span>
+                                <span class="legend-threshold-tag">Decision Threshold: 30%</span>
                                 <span>100% (Imminent Failure)</span>
                             </div>
                         </div>
 
-                        <!-- 6-Parameter Telemetry Snapshot Matrix -->
+                        <!-- 6-Parameter Telemetry Snapshot -->
                         <div class="telemetry-grid">
                             <div class="telemetry-cell">
                                 <span class="cell-label">Product Type</span>
@@ -304,95 +304,35 @@
                             </div>
                         </div>
 
-                        <!-- Detected Sensor Stress / Anomalies (if any) -->
-                        {% if result.anomalies %}
-                        <div class="anomalies-box">
-                            <div class="anomalies-title-row">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
-                                    <line x1="12" y1="9" x2="12" y2="13"></line>
-                                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                                </svg>
-                                <span>Sensor Strain Alerts:</span>
-                            </div>
-                            <ul class="anomalies-bullet-list">
-                                {% for anomaly in result.anomalies %}
-                                <li>{{ anomaly }}</li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                        {% endif %}
-
-                        <!-- Distinct Maintenance Action Recommendation Box -->
-                        <div class="recommendation-callout">
-                            <div class="rec-header">
-                                <div class="rec-icon">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <!-- VIEW AI MAINTENANCE RECOMMENDATION Button -->
+                        <form method="POST" action="/recommendation" id="viewRecommendationForm">
+                            <input type="hidden" name="machine_type" value="{{ result.machine_type }}">
+                            <input type="hidden" name="air_temperature" value="{{ result.air_temperature }}">
+                            <input type="hidden" name="process_temperature" value="{{ result.process_temperature }}">
+                            <input type="hidden" name="rotational_speed" value="{{ result.rotational_speed }}">
+                            <input type="hidden" name="torque" value="{{ result.torque }}">
+                            <input type="hidden" name="tool_wear" value="{{ result.tool_wear }}">
+                            <button type="submit" class="recommend-button" id="viewRecBtn">
+                                <span class="btn-shimmer"></span>
+                                <span class="btn-content">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                                         <polyline points="14 2 14 8 20 8"></polyline>
                                         <line x1="16" y1="13" x2="8" y2="13"></line>
                                         <line x1="16" y1="17" x2="8" y2="17"></line>
                                     </svg>
-                                </div>
-                                <h4 class="rec-title">Maintenance Protocol & Recommendation</h4>
-                            </div>
-                            <p class="rec-text">{{ result.recommendation }}</p>
-                        </div>
-
-                        <!-- AI Maintenance Assistant (Powered by Gemini) -->
-                        <div class="ai-assistant-card">
-                            <div class="ai-assistant-header">
-                                <div class="ai-assistant-icon">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                    <span>VIEW AI MAINTENANCE RECOMMENDATION</span>
+                                    <svg class="btn-icon-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
                                     </svg>
-                                </div>
-                                <div class="ai-header-titles">
-                                    <div class="ai-pill-badge">
-                                        <span class="ai-pulse-dot"></span>
-                                        <span>Generative AI Analysis • Gemini</span>
-                                    </div>
-                                    <h4 class="ai-card-title">AI Maintenance Assistant</h4>
-                                </div>
-                            </div>
-
-                            {% if result.ai_error and not result.ai_available %}
-                            <div class="ai-notice-box">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                    <line x1="12" y1="8" x2="12" y2="12"></line>
-                                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                                </svg>
-                                <span>AI explanation unavailable. ML prediction is still available.</span>
-                            </div>
-                            {% else %}
-                            <div class="ai-content-stack">
-                                <div class="ai-section-item">
-                                    <span class="ai-section-label">AI Explanation</span>
-                                    <p class="ai-section-text">{{ result.ai_explanation }}</p>
-                                </div>
-
-                                <div class="ai-section-item">
-                                    <span class="ai-section-label">Key Parameters</span>
-                                    <p class="ai-section-text">{{ result.ai_key_parameters }}</p>
-                                </div>
-
-                                <div class="ai-section-item">
-                                    <span class="ai-section-label">Maintenance Guidance</span>
-                                    <p class="ai-section-text">{{ result.ai_maintenance_guidance }}</p>
-                                </div>
-
-                                <div class="ai-advisory-item">
-                                    <span class="ai-advisory-label">Advisory</span>
-                                    <p class="ai-advisory-text">{{ result.ai_advisory }}</p>
-                                </div>
-                            </div>
-                            {% endif %}
-                        </div>
+                                </span>
+                            </button>
+                        </form>
 
                     </div>
                     {% else %}
-                    <!-- Standby / Empty State When No Prediction Made Yet -->
+                    <!-- Standby / Empty State -->
                     <div class="standby-card">
                         <div class="radar-scanner-element">
                             <div class="radar-circle-1"></div>
@@ -402,13 +342,13 @@
                         </div>
                         <h3 class="standby-title">Awaiting Telemetry Stream</h3>
                         <p class="standby-desc">
-                            Specify sensor parameters on the left, then click 
-                            <strong class="standby-highlight">Predict Machine Failure</strong> to generate a diagnostic health report.
+                            Enter the six machine operating parameters, then click
+                            <strong class="standby-highlight">PREDICT FAILURE RISK</strong> to calculate failure probability.
                         </p>
                         <div class="standby-specs">
-                            <span class="spec-tag">Random Forest AI</span>
+                            <span class="spec-tag">Random Forest Classifier</span>
                             <span class="spec-tag">Calibrated Threshold: 30%</span>
-                            <span class="spec-tag">Multi-Sensor Validation</span>
+                            <span class="spec-tag">AI Maintenance Guidance</span>
                         </div>
                     </div>
                     {% endif %}

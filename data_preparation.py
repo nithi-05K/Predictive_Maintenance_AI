@@ -308,7 +308,6 @@ print(feature_importance)
 # ============================================================
 
 import joblib
-
 joblib.dump(model, "predictive_maintenance_model.pkl")
 
 print("\n--- Model Saving ---")

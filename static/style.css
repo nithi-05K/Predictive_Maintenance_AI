@@ -75,6 +75,11 @@ html {
     color-scheme: dark;
 }
 
+.is-hidden {
+    display: none !important;
+}
+
+
 body {
     background-color: var(--bg-deep);
     color: var(--text-primary);
@@ -1255,6 +1260,280 @@ body {
     font-family: var(--font-mono);
     font-size: 11.5px;
 }
+
+/* --------------------------------------------------------------------------
+   17b. PAGE 2 — RECOMMENDATION PAGE LAYOUT & COMPONENTS
+   -------------------------------------------------------------------------- */
+
+/* Single-column layout for Page 2 */
+.page2-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Prediction Summary Card (top of Page 2) */
+.prediction-summary-card {
+    background: rgba(13, 22, 45, 0.7);
+    border: 1px solid var(--border-medium);
+    border-radius: var(--radius-sm);
+    padding: 20px 24px;
+    animation: resultSlideIn 0.4s ease both;
+}
+
+.summary-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    color: var(--text-secondary);
+}
+
+.summary-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.summary-metrics {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.summary-metric-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+    min-width: 140px;
+}
+
+.summary-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.summary-value {
+    font-size: 18px;
+    font-weight: 800;
+    color: #f8fafc;
+}
+
+.summary-divider {
+    width: 1px;
+    height: 40px;
+    background: var(--border-subtle);
+    flex-shrink: 0;
+}
+
+/* Risk-themed summary values */
+.risk-theme-high .summary-risk,
+.risk-theme-high .summary-status {
+    color: #f87171;
+}
+.risk-theme-medium .summary-risk,
+.risk-theme-medium .summary-status {
+    color: #fbbf24;
+}
+.risk-theme-low .summary-risk,
+.risk-theme-low .summary-status {
+    color: #34d399;
+}
+
+/* AI Guidance Cards */
+.ai-guidance-card {
+    background: linear-gradient(135deg, rgba(30, 41, 75, 0.45) 0%, rgba(15, 23, 42, 0.65) 100%);
+    border: 1px solid rgba(99, 102, 241, 0.25);
+    border-radius: var(--radius-sm);
+    padding: 20px 24px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    animation: resultSlideIn 0.5s ease both;
+}
+
+.ai-guidance-card:nth-child(3) {
+    animation-delay: 0.1s;
+}
+
+.ai-guidance-card:nth-child(4) {
+    animation-delay: 0.2s;
+}
+
+.guidance-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.guidance-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.guidance-icon-explain {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.3), rgba(99, 102, 241, 0.1));
+    border: 1px solid rgba(99, 102, 241, 0.4);
+    color: #a5b4fc;
+}
+
+.guidance-icon-check {
+    background: linear-gradient(135deg, rgba(6, 182, 212, 0.3), rgba(6, 182, 212, 0.1));
+    border: 1px solid rgba(6, 182, 212, 0.4);
+    color: #67e8f9;
+}
+
+.guidance-icon-action {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.3), rgba(16, 185, 129, 0.1));
+    border: 1px solid rgba(16, 185, 129, 0.4);
+    color: #6ee7b7;
+}
+
+.guidance-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #f8fafc;
+    letter-spacing: 0.2px;
+}
+
+.guidance-text {
+    font-size: 14px;
+    color: #cbd5e1;
+    line-height: 1.7;
+    white-space: pre-line;
+}
+
+.guidance-action-text {
+    font-size: 14.5px;
+    font-weight: 500;
+    color: #e2e8f0;
+}
+
+/* Maintenance action card with risk-theme border */
+.guidance-card-action.risk-theme-high {
+    border-color: rgba(239, 68, 68, 0.4);
+    border-left: 4px solid var(--risk-high);
+}
+.guidance-card-action.risk-theme-medium {
+    border-color: rgba(245, 158, 11, 0.4);
+    border-left: 4px solid var(--risk-med);
+}
+.guidance-card-action.risk-theme-low {
+    border-color: rgba(16, 185, 129, 0.4);
+    border-left: 4px solid var(--risk-low);
+}
+
+.guidance-card-action.risk-theme-high .guidance-icon-action {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.3), rgba(239, 68, 68, 0.1));
+    border-color: rgba(239, 68, 68, 0.4);
+    color: #f87171;
+}
+.guidance-card-action.risk-theme-medium .guidance-icon-action {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.3), rgba(245, 158, 11, 0.1));
+    border-color: rgba(245, 158, 11, 0.4);
+    color: #fbbf24;
+}
+
+/* Back to Prediction Button */
+.back-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 14px 20px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--border-medium);
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+    font-family: var(--font-ui);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    cursor: pointer;
+    animation: resultSlideIn 0.5s ease 0.3s both;
+}
+
+.back-button:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--brand-cyan);
+    color: #67e8f9;
+    transform: translateY(-1px);
+}
+
+.back-button:active {
+    transform: translateY(0);
+}
+
+/* VIEW AI MAINTENANCE RECOMMENDATION button (on Page 1 results) */
+.recommend-button {
+    position: relative;
+    width: 100%;
+    margin-top: 4px;
+    background: linear-gradient(135deg, #0d9488 0%, #06b6d4 50%, #3b82f6 100%);
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 14px 20px;
+    color: #ffffff;
+    font-family: var(--font-ui);
+    font-size: 14.5px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(6, 182, 212, 0.35);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.recommend-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(6, 182, 212, 0.5), 0 0 20px rgba(59, 130, 246, 0.4);
+    filter: brightness(1.08);
+}
+
+.recommend-button:active {
+    transform: translateY(0);
+}
+
+.recommend-button .btn-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.recommend-button:hover .btn-shimmer {
+    left: 140%;
+}
+
+.spinner-icon {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
 
 /* --------------------------------------------------------------------------
    18. RESPONSIVE DESIGN (DESKTOP, LAPTOP, TABLET, MOBILE)
