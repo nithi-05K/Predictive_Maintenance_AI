@@ -171,6 +171,20 @@ The project uses the AI4I 2020 dataset, a synthetic dataset designed for predict
 
 Dataset source: [UCI Machine Learning Repository – AI4I 2020 Predictive Maintenance Dataset](https://archive.ics.uci.edu/dataset/601/ai4i+2020+predictive+maintenance+dataset)
 
+## 📈 Exploratory Data Analysis
+
+Exploratory data analysis was used to inspect the distributions of the numerical operating parameters in the selected dataset. The histograms below show the recorded values for rotational speed, torque, tool wear, air temperature and process temperature.
+
+| Feature distribution | Plot |
+|---|---|
+| Rotational speed | ![Distribution of rotational speed](eda_plots/Figure_1.png) |
+| Torque | ![Distribution of torque](eda_plots/Figure_2.png) |
+| Tool wear | ![Distribution of tool wear](eda_plots/Figure_3.png) |
+| Air temperature | ![Distribution of air temperature](eda_plots/Figure_4.png) |
+| Process temperature | ![Distribution of process temperature](eda_plots/Figure_5.png) |
+
+Note: `Figure_6.png` is also retained in the `eda_plots/` folder; it is a duplicate of the air-temperature plot.
+
 ## 📁 Project Structure
 
 ```text
@@ -183,18 +197,31 @@ Predictive_Maintenance_AI/
 ├── data_preparation.py
 ├── predict.py
 ├── validate_model.py
+├── threshold_testing.py
 │
 ├── templates/
-│   └── index.html
+│   ├── index.html
+│   └── recommendation.html
 │
 ├── static/
 │   └── style.css
 │
-├── screenshots/               # Add application screenshots here
+├── screenshots/
+│   ├── dashboard.jpg
+│   ├── failure-risk.jpg
+│   ├── normal-operation.jpg
+│   └── gemini-explanation.jpg
 │
-├── .env                       # Create locally; do not commit
+├── eda_plots/
+│   ├── Figure_1.png
+│   ├── Figure_2.png
+│   ├── Figure_3.png
+│   ├── Figure_4.png
+│   ├── Figure_5.png
+│   └── Figure_6.png
+│
 ├── .gitignore
-├── requirements.txt           # Add dependency list
+├── requirements.txt
 └── README.md
 ```
 
@@ -224,7 +251,7 @@ python -m venv .venv
 
 ### 3. Install dependencies
 
-After adding the `requirements.txt` file:
+Install the dependencies listed in the repository's `requirements.txt` file:
 
 ```bash
 pip install -r requirements.txt
